@@ -1,0 +1,5 @@
+package pt.tecnico.sise.se.insure.domain;
+
+public class InsuranceCompany {
+
+}
