@@ -1,5 +1,0 @@
-package pt.tecnico.sise.se.insure.domain;
-
-public class NIFAlreadyInUseException extends Exception {
-
-}
