@@ -1,53 +1,42 @@
 package pt.tecnico.sise.se.insure.domain;
 
+import pt.tecnico.sise.se.insure.domain.exception.IllegalNIFException;
+import pt.tecnico.sise.se.insure.domain.exception.IllegalNameException;
+import pt.tecnico.sise.se.insure.domain.exception.IllegalPolicyException;
+import pt.tecnico.sise.se.insure.domain.exception.MissingInsuranceCompanyException;
+
 public class Customer {
 	
-	//PLACEHOLDER PARA NAO GERAR ERROS:
-	
-	String Name;
-	String nif;
-	String customerName;
-	String policy;
-	
-	public Customer(String name, String nif, String customerName, String policy) {
-		super();
-		Name = name;
-		this.nif = nif;
-		this.customerName = customerName;
-		this.policy = policy;
+	private InsuranceCompany insuranceCompany;
+	private String nif;
+	private String name;
+	private Policy policy;
+
+	public Customer(InsuranceCompany insuranceCompany,String nif,String name, Policy policy) {
+		
+		if(nif == null || nif.length() != 9 || !nif.matches("[0-9]*\\d+.*") ) throw new IllegalNIFException("Error: illegal nif");
+		if(name == null || !name.trim().contains(" ")) throw new IllegalNameException("Error: illegal name");
+		if(insuranceCompany == null) throw new MissingInsuranceCompanyException("Error: invalid company");
+		if (policy == null) throw new IllegalPolicyException("Error: invalid policy");
+				
+	    this.nif = nif;
+	    this.name = name;
+	    this.policy= policy;
+	    this.insuranceCompany = insuranceCompany;
+	    insuranceCompany.addCustomer(this);
+	}
+
+	public String getNIF() {
+		
+		return this.nif;
 	}
 
 	public String getName() {
-		return Name;
+		return this.name;
 	}
 
-	public void setName(String name) {
-		Name = name;
-	}
-
-	public String getNif() {
-		return nif;
-	}
-
-	public void setNif(String nif) {
-		this.nif = nif;
-	}
-
-	public String getCustomerName() {
-		return customerName;
-	}
-
-	public void setCustomerName(String customerName) {
-		this.customerName = customerName;
-	}
-
-	public String getPolicy() {
-		return policy;
-	}
-
-	public void setPolicy(String policy) {
-		this.policy = policy;
-	}
+	public Policy getPolicy() {
 		
-
+		return this.policy;
+	}
 }
